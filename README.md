@@ -5,8 +5,6 @@
 
 A Streamlit app to upload documents, vectorize them with Qdrant, and chat using dense retrieval + reranking.
 
----
-GROQ_API_KEY = "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"
 
 ## 🚀 Setup & Run
 
