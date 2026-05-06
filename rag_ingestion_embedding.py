@@ -207,10 +207,11 @@ class QdrantVectorStore:
 # MODULE 4: DENSE QDRANT RETRIEVER
 # ═══════════════════════════════════════════════════════
 class DenseQdrantRetriever:
-    def __init__(self, model, reranker, vector_store):
+    def __init__(self, model, reranker, vector_store, threshold: float = 0.7):
         self.model = model
         self.reranker = reranker
         self.vector_store = vector_store
+        self.threshold = threshold
 
     def search(self, query: str, top_k: int = 5):
         # Step 1: Embed query
@@ -235,4 +236,6 @@ class DenseQdrantRetriever:
             reverse=True
         )
 
-        return [item[0] for item in reranked[:top_k]]
+        filtered = [item[0] for item in reranked if item[1] >= self.threshold]
+
+        return [item[0] for item in filtered[:top_k]]
